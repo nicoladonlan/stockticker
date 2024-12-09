@@ -66,7 +66,7 @@ else if (path == '/process')
         } else {
             res.write("</ul>");
             results.forEach(entry => {
-                res.write(`<li>${entry.company} (${entry.ticker}): ${entry.price}</li>`);
+                res.write(`<li>${entry.company} (${entry.ticker}): $${entry.price}</li>`);
             })
             res.write("</ul>");
         }
