@@ -6,7 +6,7 @@ var { MongoClient } = require('mongodb');
 var connectionString = 'mongodb+srv://nicoladonlan:Loonskigirl9%21@cluster0.hc8lx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 
-async function search(name) {
+async function search(name, type) {
     let client;
     
     try {
@@ -34,7 +34,7 @@ async function search(name) {
     }
 } 
 
-
+const PORT = process.env.PORT || 1010;
 http.createServer(async function (req, res) {
   
     //req.url is the complete URL from the http request
@@ -62,13 +62,13 @@ else if (path == '/process')
 
         //print the results to the page
         if (results.length === 0) {
-            res.write('No matching entries');
+            res.write('<p>No matching entries</p>');
         } else {
             res.write("</ul>");
             results.forEach(entry => {
-                res.write(`<li>${entry.company} (${entry.ticker}): ${entry.price}`);
-                res.write("</ul>");
+                res.write(`<li>${entry.company} (${entry.ticker}): ${entry.price}</li>`);
             })
+            res.write("</ul>");
         }
     } catch (err) {
         res.write("An error occured while completing your search.");
@@ -82,4 +82,6 @@ else
   res.write("404 page not found")
   res.end();
   }
-}).listen(1010);
+}).listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
